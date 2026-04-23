@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Vault — Premium TCG Collectors Marketplace</title>
+<meta name="description" content="High-value Pokémon and One Piece trading cards. Authenticated, graded, shipped worldwide from South Africa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background:#0a0a0a;
+    color:#e7e5e4;
+    font-family:'DM Sans', system-ui, sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a { color:inherit; text-decoration:none; }
+  button { cursor:pointer; font-family:inherit; border:none; background:none; color:inherit; }
+  img { display:block; max-width:100%; }
+
+  .serif { font-family:'Cormorant Garamond', serif; }
+  .bebas { font-family:'Bebas Neue', sans-serif; letter-spacing:0.02em; }
+  .container { max-width:1280px; margin:0 auto; padding:0 20px; }
+
+  /* ──── NAV ──── */
+  nav {
+    position:sticky; top:0; z-index:40;
+    background:rgba(10,10,10,0.95);
+    backdrop-filter:blur(12px);
+    border-bottom:0.5px solid rgba(41,37,36,0.8);
+  }
+  .nav-inner {
+    display:flex; align-items:center; justify-content:space-between;
+    height:72px;
+  }
+  .logo { display:flex; align-items:center; gap:10px; }
+  .logo-mark {
+    width:32px; height:32px;
+    border:0.5px solid rgba(180,83,9,0.6);
+    background:linear-gradient(135deg, #1a1208, #0a0a0a);
+    display:flex; align-items:center; justify-content:center;
+    color:#f59e0b; font-weight:700; font-size:14px;
+  }
+  .logo-text {
+    font-size:16px; font-weight:600;
+    letter-spacing:0.22em; color:#fafaf9;
+  }
+  .logo-sub {
+    font-size:8px; color:#78716c;
+    letter-spacing:0.3em; margin-top:2px;
+  }
+  .nav-links {
+    display:flex; gap:4px;
+  }
+  .nav-links a {
+    padding:8px 14px;
+    font-size:11px; font-weight:500;
+    letter-spacing:0.18em;
+    color:#a8a29e;
+    transition:color 0.2s;
+    text-transform:uppercase;
+  }
+  .nav-links a:hover { color:#fbbf24; }
+  .cart-btn {
+    padding:8px 16px;
+    border:0.5px solid rgba(180,83,9,0.5);
+    color:#fbbf24;
+    font-size:10px; letter-spacing:0.2em; font-weight:600;
+    transition:background 0.2s;
+  }
+  .cart-btn:hover { background:rgba(180,83,9,0.15); }
+
+  /* ──── HERO ──── */
+  .hero {
+    position:relative; overflow:hidden;
+    padding:60px 0 40px;
+    background:linear-gradient(180deg, #0a0a0a 0%, #0f0a04 100%);
+  }
+  .hero::before {
+    content:"";
+    position:absolute; inset:0; opacity:0.35;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(201,168,76,0.28), transparent 45%),
+      radial-gradient(circle at 85% 75%, rgba(201,168,76,0.15), transparent 45%);
+  }
+  .hero-grid {
+    position:relative;
+    display:grid; grid-template-columns:1.5fr 1fr;
+    gap:40px; align-items:center;
+  }
+  .eyebrow {
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow-line { width:28px; height:1px; background:#f59e0b; }
+  .eyebrow-text {
+    color:#f59e0b; font-size:10px;
+    letter-spacing:0.3em; font-weight:600;
+    text-transform:uppercase;
+  }
+  .hero h1 {
+    font-family:'Cormorant Garamond', serif;
+    font-weight:300; line-height:0.96;
+    font-size:clamp(2.5rem, 6vw, 4.5rem);
+    color:#fafaf9; margin-bottom:18px;
+  }
+  .hero h1 em {
+    color:#fbbf24; font-weight:300; font-style:italic;
+  }
+  .hero-desc {
+    color:#a8a29e; font-size:15px; line-height:1.65;
+    max-width:500px; margin-bottom:28px;
+  }
+  .btns { display:flex; gap:10px; flex-wrap:wrap; }
+  .btn-gold {
+    background:#f59e0b; color:#0a0a0a;
+    padding:13px 24px; font-size:11px;
+    font-weight:600; letter-spacing:0.25em;
+    transition:background 0.2s;
+    display:inline-flex; align-items:center; gap:8px;
+    border:none;
+  }
+  .btn-gold:hover { background:#fbbf24; }
+  .btn-ghost {
+    background:transparent;
+    border:0.5px solid rgba(180,83,9,0.55);
+    color:#fbbf24;
+    padding:13px 24px; font-size:11px;
+    font-weight:600; letter-spacing:0.25em;
+    transition:background 0.2s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-ghost:hover { background:rgba(180,83,9,0.12); }
+  .hero-stats {
+    display:flex; gap:32px;
+    margin-top:32px; padding-top:22px;
+    border-top:0.5px solid rgba(41,37,36,0.7);
+  }
+  .stat-num {
+    font-family:'Cormorant Garamond', serif;
+    color:#fafaf9; font-size:24px; font-weight:300;
+  }
+  .stat-lbl {
+    font-size:9px; color:#78716c;
+    letter-spacing:0.25em; text-transform:uppercase;
+    margin-top:3px;
+  }
+
+  .grail-card {
+    position:relative;
+    background:rgba(10,10,10,0.85);
+    border:0.5px solid rgba(180,83,9,0.35);
+    padding:18px;
+  }
+  .grail-card::before {
+    content:"";
+    position:absolute; top:-8px; left:-8px;
+    width:100%; height:100%;
+    border:0.5px solid rgba(180,83,9,0.4);
+    z-index:-1;
+  }
+  .grail-badge-row {
+    display:flex; justify-content:space-between;
+    align-items:center; margin-bottom:10px;
+  }
+  .chip {
+    display:inline-flex; align-items:center;
+    padding:3px 9px; font-size:9px;
+    letter-spacing:0.2em; text-transform:uppercase;
+    border:0.5px solid;
+  }
+  .chip-gold {
+    background:rgba(69,26,3,0.6);
+    color:#fcd34d; border-color:rgba(180,83,9,0.5);
+  }
+  .chip-green {
+    background:rgba(6,44,34,0.6);
+    color:#6ee7b7; border-color:rgba(4,120,87,0.5);
+  }
+  .grail-img {
+    aspect-ratio:5/7; background:#1c1917;
+    overflow:hidden; margin-bottom:12px;
+  }
+  .grail-img img { width:100%; height:100%; object-fit:contain; }
+  .grail-meta {
+    font-size:9px; color:#78716c;
+    letter-spacing:0.2em; margin-bottom:4px;
+  }
+  .grail-name {
+    font-family:'Cormorant Garamond', serif;
+    color:#fafaf9; font-size:18px; margin-bottom:10px;
+  }
+  .grail-footer {
+    display:flex; justify-content:space-between;
+    align-items:center;
+  }
+  .grail-price {
+    font-family:'Bebas Neue', sans-serif;
+    color:#fbbf24; font-size:28px; line-height:1;
+  }
+
+  /* ──── TICKER ──── */
+  .ticker-wrap {
+    position:relative;
+    border-top:0.5px solid rgba(41,37,36,0.7);
+    background:rgba(10,10,10,0.6);
+    overflow:hidden;
+  }
+  .ticker {
+    display:flex; align-items:center;
+    gap:10px; padding:10px 20px;
+    max-width:1280px; margin:0 auto;
+  }
+  .ticker-label {
+    font-size:10px; color:#34d399;
+    letter-spacing:0.2em; font-weight:600;
+    display:flex; align-items:center; gap:6px;
+    flex-shrink:0;
+  }
+  .ticker-dot {
+    width:6px; height:6px; border-radius:50%;
+    background:#34d399;
+    animation:pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; } 50% { opacity:0.3; }
+  }
+  .ticker-track {
+    overflow:hidden; flex:1;
+  }
+  .ticker-inner {
+    display:flex; gap:32px;
+    white-space:nowrap;
+    animation:scroll 40s linear infinite;
+  }
+  @keyframes scroll {
+    from { transform:translateX(0); }
+    to { transform:translateX(-50%); }
+  }
+  .ticker-item {
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:11px; color:#a8a29e;
+    flex-shrink:0;
+  }
+  .ticker-item .price { color:#fbbf24; font-weight:500; }
+  .ticker-item .when { color:#57534e; }
+  .ticker-item .pok { color:#f59e0b; }
+  .ticker-item .op { color:#f87171; }
+
+  /* ──── PULLS BAR ──── */
+  .pulls-bar {
+    background:linear-gradient(90deg, rgba(69,26,3,0.45), #0a0a0a);
+    border-top:0.5px solid rgba(180,83,9,0.35);
+    border-bottom:0.5px solid rgba(180,83,9,0.35);
+    padding:32px 0;
+  }
+  .pulls-bar-top {
+    display:flex; justify-content:space-between;
+    align-items:center; flex-wrap:wrap; gap:16px;
+    margin-bottom:24px;
+  }
+  .pulls-bar-title {
+    font-family:'Cormorant Garamond', serif;
+    color:#fafaf9; font-size:30px; font-weight:300;
+  }
+  .pulls-bar-title em { color:#fbbf24; font-style:italic; }
+  .pulls-grid {
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:14px;
+  }
+  .pull-card {
+    background:rgba(10,10,10,0.6);
+    border:0.5px solid rgba(41,37,36,1);
+    transition:border-color 0.3s;
+    cursor:pointer;
+    overflow:hidden;
+  }
+  .pull-card:hover { border-color:rgba(180,83,9,0.55); }
+  .pull-img-wrap {
+    position:relative;
+    aspect-ratio:5/7;
+    background:#1c1917;
+    overflow:hidden;
+  }
+  .pull-img-wrap img {
+    width:100%; height:100%; object-fit:contain;
+    transition:transform 0.6s;
+  }
+  .pull-card:hover .pull-img-wrap img { transform:scale(1.05); }
+  .pull-badge-off {
+    position:absolute; top:8px; right:8px;
+    background:#f59e0b; color:#0a0a0a;
+    font-size:9px; font-weight:700;
+    padding:3px 6px; letter-spacing:0.15em;
+  }
+  .pull-badge-time {
+    position:absolute; bottom:8px; left:8px;
+    background:rgba(10,10,10,0.9); color:#fbbf24;
+    font-size:9px; padding:3px 6px;
+    letter-spacing:0.15em;
+    display:flex; align-items:center; gap:4px;
+  }
+  .pull-body { padding:10px; }
+  .game-badge {
+    font-size:9px; font-weight:700;
+    letter-spacing:0.22em; text-transform:uppercase;
+  }
+  .pok-badge { color:#fbbf24; }
+  .op-badge { color:#f87171; }
+  .pull-name {
+    color:#fafaf9; font-size:12px;
+    font-weight:500; margin-top:4px;
+    white-space:nowrap; overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .pull-prices {
+    display:flex; align-items:baseline;
+    gap:6px; margin-top:8px;
+  }
+  .pull-price {
+    font-family:'Bebas Neue', sans-serif;
+    color:#fbbf24; font-size:20px;
+  }
+  .pull-orig {
+    color:#57534e; font-size:11px;
+    text-decoration:line-through;
+  }
+
+  /* ──── SHOP SECTION ──── */
+  .shop-section { padding:60px 0 40px; }
+  .section-head {
+    display:flex; justify-content:space-between;
+    align-items:flex-end; margin-bottom:28px;
+    flex-wrap:wrap; gap:12px;
+  }
+  .section-head h2 {
+    font-family:'Cormorant Garamond', serif;
+    color:#fafaf9; font-size:36px; font-weight:300;
+  }
+  .shop-tabs {
+    display:flex; margin-bottom:20px;
+    border-bottom:0.5px solid rgba(41,37,36,1);
+    overflow-x:auto;
+  }
+  .tab {
+    padding:12px 20px;
+    font-size:11px; font-weight:500;
+    letter-spacing:0.22em;
+    color:#78716c; position:relative;
+    white-space:nowrap;
+    transition:color 0.2s;
+  }
+  .tab.active { color:#fbbf24; }
+  .tab.active::after {
+    content:"";
+    position:absolute; bottom:-1px; left:0; right:0;
+    height:1px; background:#fbbf24;
+  }
+  .tab.disabled { color:#44403c; cursor:not-allowed; }
+  .tab .count {
+    color:#44403c; margin-left:4px;
+  }
+  .card-grid {
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:14px;
+  }
+  .product-card {
+    background:rgba(10,10,10,0.4);
+    border:0.5px solid rgba(41,37,36,1);
+    transition:border-color 0.3s;
+    overflow:hidden;
+    display:flex; flex-direction:column;
+  }
+  .product-card:hover { border-color:rgba(180,83,9,0.55); }
+  .product-img {
+    position:relative;
+    aspect-ratio:5/7;
+    background:#1c1917;
+    overflow:hidden;
+  }
+  .product-img img {
+    width:100%; height:100%; object-fit:contain;
+    transition:transform 0.7s;
+  }
+  .product-card:hover .product-img img { transform:scale(1.04); }
+  .grail-tag {
+    position:absolute; top:8px; left:8px;
+    background:#f59e0b; color:#0a0a0a;
+    font-size:9px; font-weight:700;
+    padding:3px 6px; letter-spacing:0.2em;
+  }
+  .one-of-one {
+    position:absolute; top:8px; right:8px;
+    background:rgba(10,10,10,0.8);
+    color:#fbbf24; font-size:9px;
+    padding:3px 6px; letter-spacing:0.15em;
+    border:0.5px solid rgba(180,83,9,0.4);
+  }
+  .product-body { padding:12px; flex:1; display:flex; flex-direction:column; }
+  .product-top {
+    display:flex; justify-content:space-between;
+    margin-bottom:4px;
+  }
+  .product-grade {
+    font-size:9px; color:#78716c;
+    letter-spacing:0.2em;
+  }
+  .product-name {
+    color:#fafaf9; font-size:13px;
+    font-weight:500; line-height:1.3;
+    margin-bottom:2px;
+  }
+  .product-set {
+    font-size:10px; color:#78716c;
+    margin-bottom:10px;
+  }
+  .product-footer {
+    display:flex; justify-content:space-between;
+    align-items:center;
+    padding-top:10px;
+    border-top:0.5px solid rgba(41,37,36,0.6);
+    margin-top:auto;
+  }
+  .product-price {
+    font-family:'Bebas Neue', sans-serif;
+    color:#fbbf24; font-size:22px;
+  }
+  .buy-btn {
+    background:#f59e0b; color:#0a0a0a;
+    padding:7px 12px; font-size:10px;
+    font-weight:600; letter-spacing:0.18em;
+    transition:background 0.2s;
+    border:none;
+  }
+  .buy-btn:hover { background:#fbbf24; }
+  .buy-btn.disabled {
+    background:#44403c; color:#a8a29e;
+    cursor:not-allowed;
+  }
+
+  /* ──── PULLS SECTION (full) ──── */
+  .pulls-section { padding:60px 0 40px; background:rgba(10,10,10,0.3); }
+  .pulls-full-grid {
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:18px; margin-top:24px;
+  }
+  .pull-full {
+    background:rgba(10,10,10,0.6);
+    border:0.5px solid rgba(41,37,36,1);
+    overflow:hidden;
+  }
+  .pull-full:hover { border-color:rgba(180,83,9,0.55); }
+  .pull-full-video {
+    position:relative;
+    aspect-ratio:16/9;
+    background:#1c1917;
+    overflow:hidden;
+  }
+  .pull-full-video img {
+    width:100%; height:100%; object-fit:contain;
+  }
+  .pull-full-video::after {
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(to top, #0a0a0a, transparent 65%);
+  }
+  .pull-full-tags {
+    position:absolute; top:10px; left:10px;
+    display:flex; gap:5px; z-index:2;
+  }
+  .tag-yt {
+    background:#dc2626; color:#fafaf9;
+    font-size:9px; font-weight:700;
+    padding:3px 6px; letter-spacing:0.2em;
+    display:flex; align-items:center; gap:3px;
+  }
+  .tag-off {
+    background:#f59e0b; color:#0a0a0a;
+    font-size:9px; font-weight:700;
+    padding:3px 6px; letter-spacing:0.2em;
+  }
+  .pull-vid-title {
+    position:absolute; bottom:8px; left:10px; right:10px;
+    z-index:2;
+  }
+  .pull-vid-meta {
+    font-size:9px; color:#a8a29e;
+    letter-spacing:0.15em; margin-bottom:2px;
+  }
+  .pull-vid-name {
+    color:#fafaf9; font-size:12px; font-weight:600;
+    white-space:nowrap; overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .pull-full-body { padding:14px; }
+  .pull-full-name {
+    color:#fafaf9; font-size:15px;
+    font-weight:500; margin-top:4px;
+  }
+  .pull-full-meta {
+    font-size:10px; color:#78716c;
+  }
+  .pull-full-prices {
+    display:flex; align-items:baseline;
+    gap:8px; margin-top:10px;
+  }
+  .pull-full-price {
+    font-family:'Bebas Neue', sans-serif;
+    color:#fbbf24; font-size:28px;
+  }
+  .pull-full-orig {
+    color:#57534e; font-size:13px;
+    text-decoration:line-through;
+  }
+  .pull-savings {
+    margin-left:auto; color:#34d399;
+    font-size:10px; font-weight:600;
+  }
+  .pull-full-footer {
+    display:flex; justify-content:space-between;
+    align-items:center;
+    margin-top:14px; padding-top:12px;
+    border-top:0.5px solid rgba(41,37,36,1);
+  }
+  .pull-timer {
+    display:flex; align-items:center; gap:4px;
+    color:#fbbf24; font-size:11px; font-weight:500;
+  }
+
+  /* ──── HOW IT WORKS ──── */
+  .how {
+    padding:50px 0; background:rgba(10,10,10,0.4);
+    border-top:0.5px solid rgba(41,37,36,0.4);
+    border-bottom:0.5px solid rgba(41,37,36,0.4);
+  }
+  .how-grid {
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+    max-width:960px; margin:28px auto 0;
+  }
+  .how-step { text-align:center; }
+  .how-num {
+    font-family:'Cormorant Garamond', serif;
+    color:#f59e0b; font-size:32px; font-weight:300;
+    margin-bottom:6px;
+  }
+  .how-t { color:#fafaf9; font-size:14px; font-weight:500; margin-bottom:4px; }
+  .how-d { color:#78716c; font-size:12px; line-height:1.6; }
+
+  /* ──── TRUST ──── */
+  .trust { padding:40px 0; }
+  .trust-grid {
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:20px; text-align:center;
+  }
+  .trust-icon {
+    width:32px; height:32px;
+    margin:0 auto 8px;
+    color:#f59e0b;
+  }
+  .trust-icon svg { width:100%; height:100%; }
+  .trust-t {
+    color:#e7e5e4; font-size:11px;
+    font-weight:500; letter-spacing:0.18em;
+    text-transform:uppercase;
+  }
+  .trust-d { color:#78716c; font-size:11px; margin-top:3px; }
+
+  /* ──── FOOTER ──── */
+  footer {
+    border-top:0.5px solid rgba(41,37,36,0.7);
+    background:rgba(10,10,10,0.7);
+    padding:40px 0 24px;
+    margin-top:40px;
+  }
+  .footer-grid {
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr;
+    gap:32px; margin-bottom:28px;
+  }
+  .footer-col h4 {
+    color:#f59e0b; font-size:10px;
+    letter-spacing:0.3em; font-weight:600;
+    text-transform:uppercase; margin-bottom:12px;
+  }
+  .footer-col a, .footer-col li {
+    color:#a8a29e; font-size:13px;
+    list-style:none; line-height:2;
+    transition:color 0.2s; display:block;
+  }
+  .footer-col a:hover { color:#fbbf24; }
+  .footer-desc {
+    color:#78716c; font-size:12px;
+    line-height:1.6; margin-top:8px;
+  }
+  .footer-bottom {
+    padding-top:20px;
+    border-top:0.5px solid rgba(41,37,36,1);
+    display:flex; justify-content:space-between;
+    flex-wrap:wrap; gap:10px;
+    font-size:10px; color:#57534e;
+    letter-spacing:0.22em; text-transform:uppercase;
+  }
+
+  /* ──── MODAL ──── */
+  .modal-bg {
+    position:fixed; inset:0; z-index:100;
+    background:rgba(0,0,0,0.88);
+    backdrop-filter:blur(8px);
+    display:none;
+    align-items:flex-start; justify-content:center;
+    padding:30px 20px;
+    overflow-y:auto;
+  }
+  .modal-bg.open { display:flex; }
+  .modal {
+    background:#0a0a0a;
+    border:0.5px solid rgba(180,83,9,0.4);
+    max-width:920px; width:100%;
+    display:grid; grid-template-columns:1fr 1fr;
+    position:relative;
+  }
+  .modal-close {
+    position:absolute; top:12px; right:12px; z-index:5;
+    background:rgba(10,10,10,0.8);
+    border:0.5px solid rgba(41,37,36,1);
+    color:#e7e5e4;
+    width:32px; height:32px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px;
+  }
+  .modal-img {
+    aspect-ratio:5/7;
+    background:#1c1917;
+    overflow:hidden; position:relative;
+  }
+  .modal-img img { width:100%; height:100%; object-fit:contain; }
+  .modal-body { padding:28px; }
+  .modal-name {
+    font-family:'Cormorant Garamond', serif;
+    font-size:32px; font-weight:300;
+    color:#fafaf9; margin:6px 0 4px;
+  }
+  .modal-set {
+    color:#78716c; font-size:12px;
+    letter-spacing:0.1em; margin-bottom:16px;
+  }
+  .gold-divider {
+    height:1px;
+    background:linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent);
+    margin-bottom:16px;
+  }
+  .modal-specs {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:14px; margin-bottom:18px;
+  }
+  .spec-lbl {
+    font-size:9px; color:#78716c;
+    letter-spacing:0.22em; margin-bottom:3px;
+  }
+  .spec-val { color:#e7e5e4; font-size:13px; }
+  .price-box {
+    background:rgba(28,25,23,0.5);
+    border:0.5px solid rgba(41,37,36,1);
+    padding:16px; margin-bottom:16px;
+  }
+  .price-lbl {
+    font-size:9px; color:#78716c;
+    letter-spacing:0.22em; margin-bottom:6px;
+  }
+  .price-row {
+    display:flex; align-items:baseline; gap:10px;
+  }
+  .price-big {
+    font-family:'Bebas Neue', sans-serif;
+    color:#fbbf24; font-size:44px; line-height:1;
+  }
+  .price-orig {
+    color:#57534e; font-size:15px;
+    text-decoration:line-through;
+  }
+  .price-note {
+    color:#78716c; font-size:11px; margin-top:8px;
+  }
+  .modal-btn {
+    width:100%; padding:14px;
+    font-size:11px; font-weight:600;
+    letter-spacing:0.25em;
+    margin-bottom:10px;
+    display:flex; align-items:center; justify-content:center;
+    gap:8px;
+  }
+  .modal-actions-small {
+    display:grid; grid-template-columns:repeat(3,1fr);
+    gap:8px;
+    margin-top:16px; padding-top:16px;
+    border-top:0.5px solid rgba(41,37,36,1);
+    text-align:center;
+  }
+  .modal-action-sm {
+    font-size:9px; color:#78716c;
+    letter-spacing:0.2em;
+  }
+  .modal-action-sm svg {
+    width:16px; height:16px; margin:0 auto 4px;
+    color:#57534e;
+  }
+
+  /* ──── TRADE MODAL ──── */
+  .trade-modal {
+    background:#0a0a0a;
+    border:0.5px solid rgba(180,83,9,0.5);
+    max-width:560px; width:100%;
+    padding:28px;
+    position:relative;
+  }
+  .trade-modal h3 {
+    font-family:'Cormorant Garamond', serif;
+    font-size:26px; font-weight:300;
+    color:#fafaf9; margin-bottom:8px;
+  }
+  .trade-form {
+    display:flex; flex-direction:column; gap:12px;
+    margin-top:18px;
+  }
+  .trade-form input,
+  .trade-form textarea,
+  .trade-form select {
+    background:#0a0a0a;
+    border:0.5px solid rgba(41,37,36,1);
+    color:#e7e5e4;
+    padding:10px 12px;
+    font-size:12px;
+    font-family:inherit;
+    outline:none;
+  }
+  .trade-form input:focus,
+  .trade-form textarea:focus,
+  .trade-form select:focus {
+    border-color:rgba(180,83,9,0.6);
+  }
+  .trade-form label {
+    font-size:10px; color:#78716c;
+    letter-spacing:0.2em; margin-bottom:-6px;
+  }
+
+  /* ──── RESPONSIVE ──── */
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns:1fr; }
+    .pulls-grid, .card-grid { grid-template-columns:repeat(2, 1fr); }
+    .pulls-full-grid, .footer-grid, .trust-grid, .how-grid {
+      grid-template-columns:repeat(2, 1fr);
+    }
+    .nav-links { display:none; }
+    .modal { grid-template-columns:1fr; }
+    .modal-img { aspect-ratio:5/4; }
+    .logo-sub { display:none; }
+    .hero h1 { font-size:2.4rem; }
+  }
+  @media (max-width: 560px) {
+    .pulls-grid, .card-grid, .pulls-full-grid,
+    .footer-grid, .trust-grid, .how-grid {
+      grid-template-columns:1fr;
+    }
+    .hero-stats { gap:16px; }
+    .hero-stats > div { flex:1; min-width:70px; }
+    .section-head h2 { font-size:28px; }
+  }
+
+  /* ──── TOAST ──── */
+  .toast {
+    position:fixed; bottom:24px; right:24px;
+    background:#0a0a0a;
+    border:0.5px solid rgba(180,83,9,0.6);
+    padding:12px 18px;
+    color:#e7e5e4; font-size:13px;
+    display:flex; align-items:center; gap:10px;
+    z-index:200;
+    transform:translateY(100px); opacity:0;
+    transition:all 0.3s;
+  }
+  .toast.show { transform:translateY(0); opacity:1; }
+</style>
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<nav>
+  <div class="container nav-inner">
+    <a href="#top" class="logo">
+      <div class="logo-mark serif">V</div>
+      <div>
+        <div class="logo-text serif">THE VAULT</div>
+        <div class="logo-sub">COLLECTORS · SINCE 2026</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#shop">SHOP</a>
+      <a href="#pulls">PULLS</a>
+      <a href="#how">HOW IT WORKS</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+    <a href="https://wa.me/27000000000" class="cart-btn">WHATSAPP US →</a>
+  </div>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<section id="top" class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow">
+        <div class="eyebrow-line"></div>
+        <span class="eyebrow-text">CM CONSULTING · SOUTH AFRICA</span>
+      </div>
+      <h1 class="serif">
+        High-value cards.<br>
+        <em>Traded, graded,</em><br>
+        shipped worldwide.
+      </h1>
+      <p class="hero-desc">
+        The vault for serious Pokémon and One Piece collectors.
+        Authenticated grails, YouTube pulls at 50% off, and a peer-to-peer
+        trading floor for the pieces that never hit retail.
+      </p>
+      <div class="btns">
+        <a href="#shop" class="btn-gold">ENTER THE VAULT →</a>
+        <a href="#pulls" class="btn-ghost">🔥 LIVE PULLS · 50% OFF</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num serif">120+</div>
+          <div class="stat-lbl">Grails Listed</div>
+        </div>
+        <div>
+          <div class="stat-num serif">100%</div>
+          <div class="stat-lbl">Authenticated</div>
+        </div>
+        <div>
+          <div class="stat-num serif">72h</div>
+          <div class="stat-lbl">Ship Worldwide</div>
+        </div>
+        <div>
+          <div class="stat-num serif">24/7</div>
+          <div class="stat-lbl">Trade Floor</div>
+        </div>
+      </div>
+    </div>
+    <div class="grail-card">
+      <div class="grail-badge-row">
+        <span class="chip chip-gold">◆ GRAIL OF THE WEEK</span>
+        <span style="font-size:9px; color:#78716c;">1 OF 1</span>
+      </div>
+      <div class="grail-img">
+        <img src="https://images.pokemontcg.io/sv11/125_hires.png" alt="Mega Gengar ex MHR" loading="lazy">
+      </div>
+      <div class="grail-meta">POKÉMON · PHANTASMAL FLAMES</div>
+      <div class="grail-name serif">Mega Gengar ex — MHR</div>
+      <div class="grail-footer">
+        <div>
+          <div style="font-size:9px; color:#78716c; letter-spacing:0.2em;">PSA 10</div>
+          <div class="grail-price bebas">$1,300</div>
+        </div>
+        <button class="btn-gold" onclick="openCard('p_grail')">VIEW</button>
+      </div>
+    </div>
+  </div>
+  <!-- Ticker -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span class="ticker-label"><span class="ticker-dot"></span> LIVE SALES</span>
+      <div class="ticker-track">
+        <div class="ticker-inner" id="ticker-inner"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PULLS BAR ══════════ -->
+<section id="pulls" class="pulls-bar">
+  <div class="container">
+    <div class="pulls-bar-top">
+      <div>
+        <div class="eyebrow">
+          <span class="eyebrow-text" style="display:flex;align-items:center;gap:8px;">
+            ▶ YOUTUBE PULLS · 50% OFF · LIMITED
+          </span>
+        </div>
+        <h2 class="pulls-bar-title serif">Pulled on camera. <em>Sold at half.</em></h2>
+      </div>
+      <a href="#pulls-full" class="btn-gold">VIEW ALL PULLS →</a>
+    </div>
+    <div class="pulls-grid" id="pulls-grid"></div>
+  </div>
+</section>
+
+<!-- ══════════ SHOP ══════════ -->
+<section id="shop" class="shop-section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <div class="eyebrow-line"></div>
+          <span class="eyebrow-text">CURATED INVENTORY</span>
+        </div>
+        <h2 class="serif">Shop the Vault.</h2>
+      </div>
+    </div>
+    <div class="shop-tabs" id="shop-tabs">
+      <button class="tab active" data-tab="pokemon">POKÉMON <span class="count">(8)</span></button>
+      <button class="tab" data-tab="onepiece">ONE PIECE <span class="count">(6)</span></button>
+      <button class="tab disabled">SPORTS <span class="count">SOON</span></button>
+    </div>
+    <div class="card-grid" id="card-grid"></div>
+  </div>
+</section>
+
+<!-- ══════════ PULLS FULL ══════════ -->
+<section id="pulls-full" class="pulls-section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">
+          <div class="eyebrow-line"></div>
+          <span class="eyebrow-text">LIVE PULLS · 50% OFF LIST</span>
+        </div>
+        <h2 class="serif">Fresh from the break.</h2>
+      </div>
+    </div>
+    <div class="pulls-full-grid" id="pulls-full-grid"></div>
+  </div>
+</section>
+
+<!-- ══════════ HOW IT WORKS ══════════ -->
+<section id="how" class="how">
+  <div class="container">
+    <div class="section-head" style="justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+      <div class="eyebrow" style="justify-content:center;">
+        <div class="eyebrow-line"></div>
+        <span class="eyebrow-text">HOW THE VAULT WORKS</span>
+      </div>
+      <h2 class="serif">Simple. Secure. Shipped.</h2>
+    </div>
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="how-num serif">01</div>
+        <div class="how-t">Browse & Buy</div>
+        <div class="how-d">Every card authenticated before listing. Secure checkout via Paystack. Pay in ZAR or USD.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num serif">02</div>
+        <div class="how-t">We Ship in 72h</div>
+        <div class="how-d">Insured, tracked, worldwide. Cards packaged in toploaders + team bags + bubble mailers minimum.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num serif">03</div>
+        <div class="how-t">Trade or Sell Back</div>
+        <div class="how-d">Want to trade? Message us on WhatsApp with your offer. P2P trade floor launches Q1 2026.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TRUST ══════════ -->
+<section class="trust">
+  <div class="container">
+    <div class="trust-grid">
+      <div>
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+        </div>
+        <div class="trust-t">Authenticated</div>
+        <div class="trust-d">Verified before listing</div>
+      </div>
+      <div>
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7zM5.5 19.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM18.5 19.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg>
+        </div>
+        <div class="trust-t">Insured Shipping</div>
+        <div class="trust-d">Tracked worldwide</div>
+      </div>
+      <div>
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l-4-4 4-4M3 13h14M17 7l4 4-4 4M21 11H7"/></svg>
+        </div>
+        <div class="trust-t">Escrow Trading</div>
+        <div class="trust-d">P2P with safety</div>
+      </div>
+      <div>
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14ZM9 13l-3 9 6-3 6 3-3-9"/></svg>
+        </div>
+        <div class="trust-t">Graded Options</div>
+        <div class="trust-d">PSA / CGC / BGS</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer id="contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="logo">
+          <div class="logo-mark serif">V</div>
+          <div class="logo-text serif">THE VAULT</div>
+        </div>
+        <p class="footer-desc">
+          Collectors' marketplace for Pokémon, One Piece and sports cards.
+          Operated by CM Consulting Ltd, South Africa. Serving collectors worldwide.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4>SHOP</h4>
+        <a href="#shop">Pokémon</a>
+        <a href="#shop">One Piece</a>
+        <a href="#pulls">YouTube Pulls</a>
+        <a href="#">Trade Floor (soon)</a>
+      </div>
+      <div class="footer-col">
+        <h4>CONTACT</h4>
+        <a href="https://wa.me/27000000000">WhatsApp</a>
+        <a href="mailto:gcollaros@cmconsultingltd.com">Email</a>
+        <a href="https://instagram.com/cm_consulting_ltd">Instagram</a>
+        <a href="#">YouTube</a>
+      </div>
+      <div class="footer-col">
+        <h4>INFO</h4>
+        <a href="#">Authentication</a>
+        <a href="#">Shipping & Returns</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 THE VAULT · CM CONSULTING LTD</div>
+      <div>POWERED BY PAYSTACK</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════ PRODUCT MODAL ══════════ -->
+<div class="modal-bg" id="modal">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-img" id="modal-img"></div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<!-- ══════════ TRADE MODAL ══════════ -->
+<div class="modal-bg" id="trade-modal">
+  <div class="trade-modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeTradeModal()">✕</button>
+    <span class="eyebrow-text">◆ PROPOSE A TRADE</span>
+    <h3 class="serif" id="trade-title">Trade for this card</h3>
+    <p style="color:#a8a29e; font-size:13px; line-height:1.5; margin-top:4px;">
+      Fill this out and we'll reply via WhatsApp within 24h. Tell us what you're offering, what grade it's in, and any photos you have.
+    </p>
+    <div class="trade-form">
+      <label>YOUR NAME</label>
+      <input type="text" id="trade-name" placeholder="Your name">
+      <label>WHATSAPP NUMBER</label>
+      <input type="tel" id="trade-phone" placeholder="+27 ...">
+      <label>WHAT YOU'RE OFFERING</label>
+      <textarea id="trade-offer" placeholder="e.g. Mega Gardevoir ex PSA 10, pulled last month, can send photos..." rows="4"></textarea>
+      <label>CASH TO BALANCE (IF ANY)</label>
+      <input type="text" id="trade-cash" placeholder="$0 either way">
+      <button class="btn-gold modal-btn" onclick="submitTrade()">SEND TRADE OFFER VIA WHATSAPP</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ TOAST ══════════ -->
+<div class="toast" id="toast">✓ <span id="toast-msg"></span></div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// DATA — swap in your real cards + Paystack payment links
+// ═══════════════════════════════════════════════════
+
+const PRODUCTS = [
+  // POKEMON
+  { id:"p1", game:"pokemon", set:"ME1", setName:"Mega Evolution", name:"Mega Lucario ex", number:"188/170", rarity:"Mega Hyper Rare", grade:"Raw NM", price:300, img:"https://images.pokemontcg.io/sv10-5/188_hires.png", featured:true, paystack:"https://paystack.com/pay/REPLACE-THIS-LINK" },
+  { id:"p2", game:"pokemon", set:"ME1", setName:"Mega Evolution", name:"Mega Gardevoir ex", number:"178/170", rarity:"SIR", grade:"PSA 10", price:695, img:"https://images.pokemontcg.io/sv10-5/178_hires.png", featured:true, paystack:"https://paystack.com/pay/REPLACE-THIS-LINK" },
+  { id:"p_grail", game:"pokemon", set:"ME2", setName:"Phantasmal Flames", name:"Mega Gengar ex", number:"125/167", rarity:"Mega Hyper Rare", grade:"PSA 10", price:1300, img:"https://images.pokemontcg.io/sv11/125_hires.png", featured:true, grail:true, paystack:"https://paystack.com/pay/REPLACE-THIS-LINK" },
+  { id:"p4", game:"pokemon", set:"ME2", setName:"Phantasmal Flames", name:"Mega Charizard ex", number:"130/167", rarity:"Mega Hyper Rare", grade:"Raw NM", price:400, img:"https://images.pokemontcg.io/sv11/130_hires.png", featured:true, paystack:"https://paystack.com/pay/REPLACE-THIS-LINK" },
+  { id:"p5", game:"pokemon", set:"151", setName:"SV 151", name:"Charizard ex", number:"199/165", rarity:"SIR", grade:"PSA 10", price:650, img:"https://images.pokemontcg.io/sv3pt5/199_hires.png", featured:true, paystack:"https://paystack.com/pay/REPLACE-THIS-LINK" },
+  { id:"p6", game:"pokemon", set:"151", setName:"SV 151", name:"Mew ex", number:"205/165", rarity:"SIR", grade:"PSA 10", price:425, img:"https://images.pokemontcg.io/sv3pt5/205_hires.png", paystack:"https://paystack.com/pay/REPLACE-THIS-LINK" },
+  { id:"p7", game:"pokemon", set:"SUM", setName:"Surging Sparks", name:"Pikachu ex", number:"247/191", rarity:"SIR", grade:"PSA 10", price:780, img:"https://images.pokemontcg.io/sv8/247_hires.png", grail:true, paystack:"https://paystack.com/pay/REPLACE-THIS-LINK" },
+  { id:"p8", game:"pokemon", set:"ME1", setName:"Mega Evolution", name:"Mega Lucario ex", number:"181/170", rarity:"Ultra Rare", grade:"Raw NM", price:89, img:"https://images.pokemontcg.io/sv10-5/181_hires.png", paystack:"https://paystack.com/pay/REPLACE-THIS-LINK" },
+  // ONE PIECE
+  { id:"op1", game:"onepiece", set:"OP02", setName:"Paramount War", name:"Portgas D. Ace", number:"OP02-013", rarity:"Comic Parallel", grade:"PSA 10", price:1195, img:"https://en.onepiece-cardgame.com/images/cardlist/card/OP02-013.png", featured:true, grail:true, paystack:"https://paystack.com/pay/REPLACE-THIS-LINK" },
+  { id:"op2", game:"onepiece", set:"OP01", setName:"Romance Dawn", name:"Monkey D. Luffy", number:"OP01-003", rarity:"Leader Parallel", grade:"BGS 9.5", price:890, img:"https://en.onepiece-cardgame.com/images/cardlist/card/OP01-003.png", featured:true, paystack:"https://paystack.com/pay/REPLACE-THIS-LINK" },
+  { id:"op3", game:"onepiece", set:"PRB-01", setName:"Premium Booster", name:"Shanks", number:"PRB01-015", rarity:"Super Rare", grade:"Raw NM", price:340, img:"https://en.onepiece-cardgame.com/images/cardlist/card/PRB01-015.png", featured:true, paystack:"https://paystack.com/pay/REPLACE-THIS-LINK" },
+  { id:"op4", game:"onepiece", set:"OP13", setName:"Red Manga Rares", name:"Monkey D. Luffy", number:"OP13-121", rarity:"Manga Rare", grade:"PSA 10", price:420, img:"https://en.onepiece-cardgame.com/images/cardlist/card/OP13-121.png", featured:true, paystack:"https://paystack.com/pay/REPLACE-THIS-LINK" },
+  { id:"op5", game:"onepiece", set:"OP07", setName:"500 Years in the Future", name:"Roronoa Zoro", number:"OP07-119", rarity:"Manga Rare", grade:"Raw NM", price:285, img:"https://en.onepiece-cardgame.com/images/cardlist/card/OP07-119.png", paystack:"https://paystack.com/pay/REPLACE-THIS-LINK" },
+  { id:"op6", game:"onepiece", set:"OP11", setName:"A Fist of Divine Speed", name:"Nami", number:"OP11-078", rarity:"Manga Rare", grade:"PSA 10", price:310, img:"https://en.onepiece-cardgame.com/images/cardlist/card/OP11-078.png", paystack:"https://paystack.com/pay/REPLACE-THIS-LINK" },
+];
+
+const PULLS = [
+  { id:"pl1", game:"pokemon", name:"Mega Lucario ex", set:"ME1", rarity:"MHR", originalPrice:300, price:150, img:"https://images.pokemontcg.io/sv10-5/188_hires.png", videoTitle:"ME1 TRIPLE BOX — WE HIT IT", videoViews:"12K", pulledAt:"NOV 2", expiresIn:72, paystack:"https://paystack.com/pay/REPLACE-THIS-LINK" },
+  { id:"pl2", game:"onepiece", name:"Ace Comic Parallel", set:"OP02", rarity:"Comic Parallel", originalPrice:670, price:335, img:"https://en.onepiece-cardgame.com/images/cardlist/card/OP02-013.png", videoTitle:"OP02 COMIC HUNT — 5 BOXES", videoViews:"8.2K", pulledAt:"NOV 4", expiresIn:48, paystack:"https://paystack.com/pay/REPLACE-THIS-LINK" },
+  { id:"pl3", game:"pokemon", name:"Mega Gengar ex", set:"ME2", rarity:"MHR", originalPrice:680, price:340, img:"https://images.pokemontcg.io/sv11/125_hires.png", videoTitle:"PHANTASMAL FLAMES × 4", videoViews:"15K", pulledAt:"NOV 6", expiresIn:36, paystack:"https://paystack.com/pay/REPLACE-THIS-LINK" },
+];
+
+const SALES = [
+  { n:"Mega Gengar MHR", p:1300, g:"pokemon", w:"2m" },
+  { n:"Ace Comic Parallel", p:1195, g:"onepiece", w:"14m" },
+  { n:"Charizard ex SIR", p:650, g:"pokemon", w:"41m" },
+  { n:"Luffy OP13 Manga", p:420, g:"onepiece", w:"1h" },
+  { n:"Pikachu ex SIR", p:780, g:"pokemon", w:"2h" },
+  { n:"Shanks SR", p:340, g:"onepiece", w:"3h" },
+];
+
+// ═══════════════════════════════════════════════════
+// RENDERING
+// ═══════════════════════════════════════════════════
+
+function escapeAttr(s) { return String(s).replace(/"/g, '&quot;'); }
+
+// Ticker
+document.getElementById("ticker-inner").innerHTML =
+  [...SALES, ...SALES].map(s =>
+    `<span class="ticker-item"><span class="${s.g==='pokemon'?'pok':'op'}">◆</span> ${s.n} <span class="price">$${s.p}</span> <span class="when">${s.w} ago</span></span>`
+  ).join("");
+
+// Featured pulls (home)
+document.getElementById("pulls-grid").innerHTML =
+  PULLS.map(p => `
+    <div class="pull-card" onclick="openCard('${p.id}', true)">
+      <div class="pull-img-wrap">
+        <img src="${p.img}" alt="${escapeAttr(p.name)}" loading="lazy">
+        <div class="pull-badge-off">50% OFF</div>
+        <div class="pull-badge-time">⏱ ${p.expiresIn}H</div>
+      </div>
+      <div class="pull-body">
+        <span class="game-badge ${p.game==='pokemon'?'pok-badge':'op-badge'}">◆ ${p.game==='pokemon'?'POKÉMON':'ONE PIECE'}</span>
+        <div class="pull-name">${p.name}</div>
+        <div class="pull-prices">
+          <span class="pull-price bebas">$${p.price}</span>
+          <span class="pull-orig">$${p.originalPrice}</span>
+        </div>
+      </div>
+    </div>
+  `).join("");
+
+// Full pulls section
+document.getElementById("pulls-full-grid").innerHTML =
+  PULLS.map(p => `
+    <div class="pull-full">
+      <div class="pull-full-video">
+        <img src="${p.img}" alt="${escapeAttr(p.name)}" loading="lazy">
+        <div class="pull-full-tags">
+          <div class="tag-yt">▶ YOUTUBE</div>
+          <div class="tag-off">50% OFF</div>
+        </div>
+        <div class="pull-vid-title">
+          <div class="pull-vid-meta">PULLED ${p.pulledAt} · ${p.videoViews} VIEWS</div>
+          <div class="pull-vid-name">${p.videoTitle}</div>
+        </div>
+      </div>
+      <div class="pull-full-body">
+        <span class="game-badge ${p.game==='pokemon'?'pok-badge':'op-badge'}">◆ ${p.game==='pokemon'?'POKÉMON':'ONE PIECE'}</span>
+        <div class="pull-full-name">${p.name}</div>
+        <div class="pull-full-meta">${p.set} · ${p.rarity}</div>
+        <div class="pull-full-prices">
+          <span class="pull-full-price bebas">$${p.price}</span>
+          <span class="pull-full-orig">$${p.originalPrice}</span>
+          <span class="pull-savings">SAVE $${p.originalPrice - p.price}</span>
+        </div>
+        <div class="pull-full-footer">
+          <span class="pull-timer">⏱ ${p.expiresIn}H LEFT</span>
+          <button class="buy-btn" onclick="openCard('${p.id}', true)">CLAIM NOW</button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+
+// Shop grid
+let currentTab = "pokemon";
+function renderGrid() {
+  const list = PRODUCTS.filter(c => c.game === currentTab);
+  document.getElementById("card-grid").innerHTML = list.map(c => `
+    <div class="product-card">
+      <div class="product-img">
+        <img src="${c.img}" alt="${escapeAttr(c.name)}" loading="lazy">
+        ${c.grail ? '<div class="grail-tag">✦ GRAIL</div>' : ''}
+      </div>
+      <div class="product-body">
+        <div class="product-top">
+          <span class="game-badge ${c.game==='pokemon'?'pok-badge':'op-badge'}">◆ ${c.game==='pokemon'?'POKÉMON':'ONE PIECE'}</span>
+          <span class="product-grade">${c.grade}</span>
+        </div>
+        <div class="product-name">${c.name}</div>
+        <div class="product-set">${c.setName} · ${c.number}</div>
+        <div class="product-footer">
+          <span class="product-price bebas">$${c.price.toLocaleString()}</span>
+          <button class="buy-btn" onclick="openCard('${c.id}')">VIEW</button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+renderGrid();
+
+document.querySelectorAll("#shop-tabs .tab:not(.disabled)").forEach(t => {
+  t.addEventListener("click", () => {
+    document.querySelectorAll("#shop-tabs .tab").forEach(x => x.classList.remove("active"));
+    t.classList.add("active");
+    currentTab = t.dataset.tab;
+    renderGrid();
+  });
+});
+
+// ═══════════════════════════════════════════════════
+// MODAL
+// ═══════════════════════════════════════════════════
+
+function openCard(id, isPull) {
+  const data = isPull ? PULLS : PRODUCTS;
+  const c = data.find(x => x.id === id);
+  if (!c) return;
+
+  document.getElementById("modal-img").innerHTML = `<img src="${c.img}" alt="${escapeAttr(c.name)}">`;
+
+  const isPullCard = isPull || c.originalPrice;
+  const setName = c.setName || c.set;
+
+  document.getElementById("modal-body").innerHTML = `
+    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+      <span class="game-badge ${c.game==='pokemon'?'pok-badge':'op-badge'}">◆ ${c.game==='pokemon'?'POKÉMON':'ONE PIECE'}</span>
+      <span class="chip chip-green">◉ IN VAULT</span>
+    </div>
+    <div class="modal-name serif">${c.name}</div>
+    <div class="modal-set">${setName} · ${c.number || ''}</div>
+    <div class="gold-divider"></div>
+    <div class="modal-specs">
+      <div><div class="spec-lbl">RARITY</div><div class="spec-val">${c.rarity}</div></div>
+      <div><div class="spec-lbl">GRADE</div><div class="spec-val">${c.grade || 'Raw NM'}</div></div>
+      <div><div class="spec-lbl">SET</div><div class="spec-val">${c.set}</div></div>
+      <div><div class="spec-lbl">AVAILABLE</div><div class="spec-val">${c.grail ? '1 of 1' : 'Limited'}</div></div>
+    </div>
+    <div class="price-box">
+      <div class="price-lbl">${isPullCard ? 'PULL PRICE · 50% OFF' : 'VAULT PRICE'}</div>
+      <div class="price-row">
+        <span class="price-big bebas">$${c.price.toLocaleString()}</span>
+        ${c.originalPrice ? `<span class="price-orig">$${c.originalPrice}</span>` : ''}
+      </div>
+      <div class="price-note">Insured shipping from $18 · Free on orders over $500</div>
+    </div>
+    <button class="btn-gold modal-btn" onclick="buyCard('${c.paystack}')">
+      🔒 BUY NOW VIA PAYSTACK
+    </button>
+    <button class="btn-ghost modal-btn" onclick="openTradeModal('${escapeAttr(c.name)}')">
+      ⇄ OFFER A TRADE INSTEAD
+    </button>
+    <div class="modal-actions-small">
+      <div class="modal-action-sm">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+        AUTHENTICATED
+      </div>
+      <div class="modal-action-sm">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7z"/></svg>
+        INSURED SHIP
+      </div>
+      <div class="modal-action-sm">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        RETURN POLICY
+      </div>
+    </div>
+  `;
+  document.getElementById("modal").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+  document.getElementById("modal").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+document.getElementById("modal").addEventListener("click", closeModal);
+
+function buyCard(paystackUrl) {
+  if (!paystackUrl || paystackUrl.includes("REPLACE-THIS-LINK")) {
+    showToast("Paystack link not set yet — contact us via WhatsApp to buy");
+    return;
+  }
+  window.open(paystackUrl, "_blank");
+}
+
+// ═══════════════════════════════════════════════════
+// TRADE MODAL
+// ═══════════════════════════════════════════════════
+
+function openTradeModal(cardName) {
+  closeModal();
+  document.getElementById("trade-title").textContent = `Trade for ${cardName}`;
+  document.getElementById("trade-title").dataset.card = cardName;
+  document.getElementById("trade-modal").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeTradeModal() {
+  document.getElementById("trade-modal").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+document.getElementById("trade-modal").addEventListener("click", closeTradeModal);
+
+function submitTrade() {
+  const card = document.getElementById("trade-title").dataset.card;
+  const name = document.getElementById("trade-name").value;
+  const phone = document.getElementById("trade-phone").value;
+  const offer = document.getElementById("trade-offer").value;
+  const cash = document.getElementById("trade-cash").value;
+
+  if (!name || !offer) {
+    showToast("Please fill in your name and what you're offering");
+    return;
+  }
+
+  const msg = `*Trade Offer — The Vault*%0A%0A*Wants:* ${card}%0A*From:* ${name}%0A*Contact:* ${phone}%0A%0A*Offering:*%0A${offer}%0A%0A*Cash adjustment:* ${cash || 'None'}`;
+
+  // Replace YOUR_NUMBER with actual WhatsApp number (international format, no +)
+  window.open(`https://wa.me/27000000000?text=${msg}`, "_blank");
+  closeTradeModal();
+  showToast("Opening WhatsApp...");
+}
+
+// ═══════════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════════
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  document.getElementById("toast-msg").textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 3000);
+}
+</script>
+</body>
+</html>
